@@ -104,7 +104,7 @@ spring:
   elasticsearch:
     uris: http://localhost:9200
     username: root
-    password: 123456
+#    password: 123456
   # 文件上传
   servlet:
     multipart:
