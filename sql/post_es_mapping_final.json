@@ -1,13 +1,10 @@
 {
-  "aliases": {
-    "post": {}
-  },
   "mappings": {
     "properties": {
       "title": {
         "type": "text",
-        "analyzer": "ik_max_word",
-        "search_analyzer": "ik_smart",
+        "analyzer": "standard",
+        "search_analyzer": "standard",
         "fields": {
           "keyword": {
             "type": "keyword",
@@ -17,8 +14,8 @@
       },
       "content": {
         "type": "text",
-        "analyzer": "ik_max_word",
-        "search_analyzer": "ik_smart"
+        "analyzer": "standard",
+        "search_analyzer": "standard"
       },
       "tags": {
         "type": "keyword"
@@ -33,16 +30,14 @@
         "type": "long"
       },
       "createTime": {
-        "type": "date",
-        "format": "yyyy-MM-dd HH:mm:ss"
+        "type": "date"
       },
       "updateTime": {
-        "type": "date",
-        "format": "yyyy-MM-dd HH:mm:ss"
+        "type": "date"
       },
       "isDelete": {
-        "type": "keyword"
+        "type": "integer"
       }
     }
   }
-}
+} 
