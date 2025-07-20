@@ -41,7 +41,7 @@ public class HotKeyConfig {
      * 初始化 hotkey
      */
     @Bean
-    public void initHotkey() {
+    public ClientStarter initHotkey() {
         ClientStarter.Builder builder = new ClientStarter.Builder();
         ClientStarter starter = builder.setAppName(appName)
                 .setCaffeineSize(caffeineSize)
@@ -49,6 +49,7 @@ public class HotKeyConfig {
                 .setEtcdServer(etcdServer)
                 .build();
         starter.startPipeline();
+        return starter;
     }
 
 }
