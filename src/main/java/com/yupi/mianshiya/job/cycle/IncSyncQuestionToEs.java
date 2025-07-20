@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 // todo 取消注释开启任务
-@Component
+// @Component
 @Slf4j
 public class IncSyncQuestionToEs {
 
