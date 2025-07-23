@@ -19,6 +19,7 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
+        <!-- 移除手动添加的sentinel-transport-simple-http，让Spring Cloud Alibaba自动管理版本 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>

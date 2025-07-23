@@ -1,9 +1,14 @@
-# 公共配置文件
-# @author <a href="https://github.com/liyupi">程序员鱼皮</a>
-# @from <a href="https://yupi.icu">编程导航知识星球</a>
 spring:
   application:
     name: mianshiya-next-backend
+  cloud:
+    sentinel:
+      # 是否启用 Sentinel
+      enabled: true
+      # 控制台地址
+      transport:
+        dashboard: 127.0.0.1:8131
+        port: 8719
   # 默认 dev 环境
   profiles:
     active: dev
@@ -55,7 +60,7 @@ spring:
       # 连接池中的minIdle数量以内的连接，空闲时间超过minEvictableIdleTimeMillis，则会执行keepAlive操作
       keepAlive: true
       # Spring 监控，利用aop 对指定接口的执行时间，jdbc数进行记录
-      aop-patterns: "com.springboot.template.dao.*"
+      aop-patterns: "com.yupi.mianshiya.mapper.*"
       ########### 启用内置过滤器（第一个 stat 必须，否则监控不到SQL）##########
       filters: stat,wall,log4j2
       # 自己配置监控统计拦截的filter
@@ -139,7 +144,7 @@ nacos:
   config:
     server-addr: 127.0.0.1:8848  # nacos 地址
     bootstrap:
-      enable: true  # 预加载
+      enable: false  # 暂时关闭，避免启动冲突
     data-id: mianshiya # 控制台填写的 Data ID
     group: DEFAULT_GROUP # 控制台填写的 group
     type: yaml  # 选择的文件格式
