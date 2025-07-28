@@ -22,7 +22,14 @@ public class BlackIpUtils {
 
     // 判断 ip 是否在黑名单里
     public static boolean isBlackIp(String ip) {
-        return bloomFilter.contains(ip);
+        if (bloomFilter == null) {
+            log.warn("布隆过滤器未初始化，IP {} 默认允许访问", ip);
+            return false;
+        }
+        
+        boolean isBlack = bloomFilter.contains(ip);
+        log.debug("检查IP {} 是否在黑名单中: {}", ip, isBlack);
+        return isBlack;
     }
 
     /**
@@ -31,14 +38,21 @@ public class BlackIpUtils {
      * @param configInfo
      */
     public static void rebuildBlackIp(String configInfo) {
+        log.info("开始重建IP黑名单，配置信息: {}", configInfo);
+        
         if (StrUtil.isBlank(configInfo)) {
             configInfo = "{}";
+            log.warn("配置信息为空，使用默认空配置");
         }
+        
         // 解析 yaml 文件
         Yaml yaml = new Yaml();
         Map map = yaml.loadAs(configInfo, Map.class);
         // 获取 IP 黑名单
         List<String> blackIpList = (List<String>) map.get("blackIpList");
+        
+        log.info("解析到的黑名单IP列表: {}", blackIpList);
+        
         // 加锁防止并发
         synchronized (BlackIpUtils.class) {
             if (CollUtil.isNotEmpty(blackIpList)) {
@@ -46,10 +60,13 @@ public class BlackIpUtils {
                 BitMapBloomFilter bitMapBloomFilter = new BitMapBloomFilter(958506);
                 for (String blackIp : blackIpList) {
                     bitMapBloomFilter.add(blackIp);
+                    log.debug("添加黑名单IP: {}", blackIp);
                 }
                 bloomFilter = bitMapBloomFilter;
+                log.info("黑名单重建完成，共添加 {} 个IP", blackIpList.size());
             } else {
                 bloomFilter = new BitMapBloomFilter(100);
+                log.info("黑名单为空，创建默认布隆过滤器");
             }
         }
     }
